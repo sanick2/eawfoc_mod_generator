@@ -19,7 +19,14 @@ fn main() {
     
     let project_path = Path::new(&cli.project_name);
 
-    // Create directories
+    generate_directories(project_path);
+    generate_readme(project_path, &cli.project_name);
+
+    println!("Mod project {} created successfully!", cli.project_name);
+}
+
+fn generate_directories(project_path: &Path) {
+    // Generates necessary mod project directories
     let directories = [
         "Data/Art",
         "Data/Audio",
@@ -33,12 +40,12 @@ fn main() {
         fs::create_dir_all(&full_path).expect("Failed to create directories");
         println!("Created directory: {:?}", full_path);
     }
+}
 
-    // Create a readme file
+fn generate_readme(project_path: &Path, project_name: &str) {
+    // Generates a readme file with some basic info
     let readme_path = project_path.join("README.md");
-    let readme_content = format!("# {}\n\nThis is the structure of the {} mod project. \n", cli.project_name, cli.project_name);
+    let readme_content = format!("# {}\n\nThis is the structure of the {} mod project. \n", project_name, project_name);
     fs::write(&readme_path, readme_content).expect("Failed to create readme file");
     println!("Created readme file: {:?}", readme_path);
-
-    println!("Mod project {} created successfully!", cli.project_name);
 }
