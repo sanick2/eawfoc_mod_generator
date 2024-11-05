@@ -1,5 +1,5 @@
 use clap::Parser;
-use fs_extra::dir::create_all;
+
 use std::path::Path;
 use std::fs;
 
@@ -30,7 +30,7 @@ fn main() {
 
     for dir in &directories {
         let full_path = project_path.join(dir);
-        create_all(&full_path, true).expect("Failed to create directories");
+        fs::create_dir_all(&full_path).expect("Failed to create directories");
         println!("Created directory: {:?}", full_path);
     }
 
