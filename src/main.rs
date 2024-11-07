@@ -19,6 +19,11 @@ fn main() {
     
     let project_path = Path::new(&cli.project_name);
 
+    if project_path.file_name().unwrap().to_str().unwrap().contains(' ') {
+        eprintln!("Error: Invalid folder name. Folder name cannot contain spaces.");
+        return;
+    }
+
     generate_directories(project_path);
     generate_readme(project_path, &cli.project_name);
 
