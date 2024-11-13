@@ -3,6 +3,8 @@ use clap::Parser;
 use std::path::Path;
 use std::fs;
 
+use colorized::*;
+
 /// CLI tool for scaffolding an empty Star Wars: Empire at War: Forces of Corruption mod project
 #[derive(Parser)]
 #[clap(name = "SW EAW FoC Mod Generator")]
@@ -20,14 +22,14 @@ fn main() {
     let project_path = Path::new(&cli.project_name);
 
     if project_path.file_name().unwrap().to_str().unwrap().contains(' ') {
-        eprintln!("Error: Invalid folder name. Folder name cannot contain spaces.");
+        colorize_println("Error: Invalid folder name. Folder name cannot contain spaces.", Colors::BrightRedFg);
         return;
     }
 
     generate_directories(project_path);
     generate_readme(project_path, &cli.project_name);
 
-    println!("Mod project {} created successfully!", cli.project_name);
+    colorize_println(&format!("Mod project {} created successfully!", cli.project_name), Colors::BrightGreenFg);
 }
 
 fn generate_directories(project_path: &Path) {
@@ -42,8 +44,8 @@ fn generate_directories(project_path: &Path) {
 
     for dir in &directories {
         let full_path = project_path.join(dir);
-        fs::create_dir_all(&full_path).expect("Failed to create directories");
-        println!("Created directory: {:?}", full_path);
+        fs::create_dir_all(&full_path).expect(" ❌ Failed to create directories");
+        println!("✅ Created directory: {:?}", full_path);
     }
 }
 
@@ -51,6 +53,6 @@ fn generate_readme(project_path: &Path, project_name: &str) {
     // Generates a readme file with some basic info
     let readme_path = project_path.join("README.md");
     let readme_content = format!("# {}\n\nThis is the structure of the {} mod project. \n", project_name, project_name);
-    fs::write(&readme_path, readme_content).expect("Failed to create readme file");
-    println!("Created readme file: {:?}", readme_path);
+    fs::write(&readme_path, readme_content).expect("❌ Failed to create readme file");
+    println!("✅ Created readme file: {:?}", readme_path);
 }
