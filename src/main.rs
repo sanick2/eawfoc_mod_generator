@@ -41,9 +41,19 @@ fn generate_project(project_path: &Path) {
     // Generates necessary mod project directories
     let directories = [
         "Data/Art",
+        "Data/Art/Maps",
+        "Data/Art/Models",
+        "Data/Art/Textures",
         "Data/Audio",
         "Data/Xml",
         "Data/Scripts",
+        "Data/Scripts/AI",
+        "Data/Scripts/Evaluators",
+        "Data/Scripts/FreeStore",
+        "Data/Scripts/GameObject",
+        "Data/Scripts/Library",
+        "Data/Scripts/Miscellaneous",
+        "Data/Scripts/Story",
         "Data/Text",
     ];
 
