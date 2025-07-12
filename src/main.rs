@@ -1,21 +1,18 @@
-use std::path::Path;
 use std::fs;
+use std::path::Path;
 
 use colorized::*;
 
-use inquire::{ Text, validator::Validation};
-
+use inquire::{validator::Validation, Text};
 
 fn run_prompt() {
-
     colorize_println("SW EAW FoC Mod Generator", Colors::BrightCyanFg);
-    
+
     // Checks and validates the mod name text input for spaces
     let name_validator = |input: &str| match input.chars().find(|c| c.is_whitespace()) {
-        Some(_) => Ok(Validation::Invalid("Mod name cannot contain spaces".into(),)),
-        None => Ok(Validation::Valid)
+        Some(_) => Ok(Validation::Invalid("Mod name cannot contain spaces".into())),
+        None => Ok(Validation::Valid),
     };
-
 
     let project_name_ans = Text::new("mod name: ")
         .with_validator(name_validator)
@@ -26,16 +23,14 @@ fn run_prompt() {
         Ok(project_name) => {
             let project_path = Path::new(&project_name);
             generate_project(project_path);
-        },
-        Err(err) => eprintln!("❌ {err}")
+        }
+        Err(err) => eprintln!("❌ {err}"),
     }
-        
 }
 
 fn main() {
     run_prompt();
 }
-
 
 fn generate_project(project_path: &Path) {
     // Generates necessary mod project directories
@@ -65,7 +60,11 @@ fn generate_project(project_path: &Path) {
 
     // Generates a readme file with some basic info
     let readme_path = project_path.join("README.md");
-    let readme_content = format!("# {}\n\nThis is the structure of the {} mod project. \n", project_path.file_name().unwrap().to_str().unwrap(), project_path.file_name().unwrap().to_str().unwrap());
+    let readme_content = format!(
+        "# {}\n\nThis is the structure of the {} mod project. \n",
+        project_path.file_name().unwrap().to_str().unwrap(),
+        project_path.file_name().unwrap().to_str().unwrap()
+    );
     fs::write(&readme_path, readme_content).expect("❌ Failed to create readme file");
     println!("✅ Created readme file: {readme_path:?}");
 }
