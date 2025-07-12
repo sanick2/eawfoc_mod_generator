@@ -27,7 +27,7 @@ fn run_prompt() {
             let project_path = Path::new(&project_name);
             generate_project(project_path);
         },
-        Err(err) => eprintln!("❌ {}", err)
+        Err(err) => eprintln!("❌ {err}")
     }
         
 }
@@ -60,12 +60,12 @@ fn generate_project(project_path: &Path) {
     for dir in &directories {
         let full_path = project_path.join(dir);
         fs::create_dir_all(&full_path).expect(" ❌ Failed to create directories");
-        println!("✅ Created directory: {:?}", full_path);
+        println!("✅ Created directory: {full_path:?}");
     }
 
     // Generates a readme file with some basic info
     let readme_path = project_path.join("README.md");
     let readme_content = format!("# {}\n\nThis is the structure of the {} mod project. \n", project_path.file_name().unwrap().to_str().unwrap(), project_path.file_name().unwrap().to_str().unwrap());
     fs::write(&readme_path, readme_content).expect("❌ Failed to create readme file");
-    println!("✅ Created readme file: {:?}", readme_path);
+    println!("✅ Created readme file: {readme_path:?}");
 }
