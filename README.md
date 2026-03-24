@@ -2,11 +2,11 @@
 
 A Rust-based CLI scaffolding tool for generating a new mod project for Star Wars: Empire At War: Forces of Corruption
 
-## Getting Started
+# Getting Started
 
->Note: MacOS is not supported, Linux support is WIP
+>Note: MacOS is not supported
 
-### Usage
+## Usage
 Download release from Github Releases. This tool does not require installation.
 
 It is recommended to run this tool in the local mods folder.
@@ -14,17 +14,22 @@ It is recommended to run this tool in the local mods folder.
 ```
   Steam: ...\Star Wars: Empire at War\corruption\Mods\
 ```
-
-Run the following command (Windows)
+### Windows
+Run the following command
 ```shell
 .\eawfoc_mod_generator.exe
 ```
-or double-click on the executable
+### Linux
+Run the following command (Linux)
+```shell
+./eawfoc_mod_generator
+```
 
 Running the program should display this prompt:
+
 ![](./assets/prompt.png)
 
-### Build and Develop Locally
+# Build and Develop Locally
 
 Install [Rust]([https://www.rust-lang.org/tools/install) Using rustup (Recommended)
 - To start using Rust, download the installer, then run the program and follow the onscreen instructions. You may need to install the Visual Studio C++ Build tools when prompted to do so. If you are not on Windows see "Other Installation Methods".
