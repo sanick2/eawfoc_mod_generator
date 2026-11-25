@@ -1,9 +1,25 @@
-use std::fs;
+use std::{fmt::Display, fs};
 use std::path::Path;
 
 use colorized::*;
 
 use inquire::{validator::Validation, Text};
+use inquire_derive::Selectable;
+
+#[derive(Debug, Copy, Clone, Selectable)]
+pub enum ModType {
+    Mod,
+    Submod,
+}
+
+impl Display for ModType {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ModType::Mod => write!(f, "Mod"),
+            ModType::Submod => write!(f, "Submod"),
+        }
+    }
+}
 
 fn run_prompt() {
     colorize_println("SW EAW FoC Mod Generator", Colors::BrightCyanFg);
@@ -19,9 +35,17 @@ fn run_prompt() {
         .with_help_message("The name of the mod you want to create")
         .prompt();
 
-    match project_name_ans {
-        Ok(project_name) => {
-            let project_path = Path::new(&project_name);
+    let mod_type_ans = ModType::select("mod type: " )
+        .with_help_message("Select the type of mod you want to create")
+        .prompt();
+
+    match mod_type_ans {
+        Ok(ModType::Mod) => {
+            let project_path = Path::new(project_name_ans.as_ref().unwrap());
+            generate_project(project_path);
+        },
+        Ok(ModType::Submod) => {
+            let project_path = Path::new(project_name_ans.as_ref().unwrap());
             generate_project(project_path);
         }
         Err(err) => eprintln!("❌ {err}"),
